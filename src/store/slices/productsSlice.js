@@ -6,8 +6,10 @@ const initialState = {
   loading: false,
   error: null,
   filters: {
-    category: '',
     priceRange: [0, 1000],
+    brands: [],
+    categories: [],
+    ratings: [],
     search: '',
     sortBy: 'name',
   },
@@ -39,8 +41,10 @@ const productsSlice = createSlice({
     
     clearFilters: (state) => {
       state.filters = {
-        category: '',
         priceRange: [0, 1000],
+        brands: [],
+        categories: [],
+        ratings: [],
         search: '',
         sortBy: 'name',
       }

@@ -20,6 +20,7 @@ const Cart = () => {
   const dispatch = useDispatch()
   const { toast } = useToast()
   const { items, total, itemCount } = useSelector(state => state.cart)
+  const { isPremium } = useSelector(state => state.membership)
 
   const handleQuantityChange = (id, newQuantity) => {
     if (newQuantity <= 0) {
@@ -83,6 +84,31 @@ const Cart = () => {
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8">
+        {/* Premium Benefits Banner */}
+        {!isPremium && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-primary/10 rounded-lg p-4 mb-6"
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex-1">
+                <h3 className="text-lg font-semibold text-primary mb-1">
+                  Upgrade to Premium
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  Get free shipping, 5% off every order, and exclusive deals!
+                </p>
+              </div>
+              <Link to="/premium">
+                <Button variant="default" size="sm">
+                  Learn More
+                </Button>
+              </Link>
+            </div>
+          </motion.div>
+        )}
+        
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

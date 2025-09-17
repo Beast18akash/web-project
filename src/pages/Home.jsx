@@ -1,4 +1,7 @@
 import { useEffect } from 'react'
+import HeroSection from '@/components/ui/HeroSection'
+import SearchBar from '../components/ui/SearchBar'
+import RecentlyViewed from '../components/ui/RecentlyViewed'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { useDispatch, useSelector } from 'react-redux'
@@ -94,219 +97,10 @@ const Home = () => {
   }
 
   return (
-    <div className="min-h-screen">
-      {/* Enhanced Hero Section */}
-      <section className="relative min-h-screen flex items-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 overflow-hidden">
-        {/* Animated Background Elements */}
-        <div className="absolute inset-0">
-          <div className="absolute top-20 left-20 w-72 h-72 bg-blue-500/20 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-20 right-20 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-cyan-500/10 rounded-full blur-2xl animate-pulse delay-500"></div>
-        </div>
-
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              className="space-y-8"
-            >
-              {/* Animated Badge */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-500/30 rounded-full text-blue-300 text-sm font-medium"
-              >
-                <span className="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></span>
-                New Collection Available
-              </motion.div>
-
-              {/* Main Heading with Typewriter Effect */}
-              <div className="space-y-4">
-                <motion.h1
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 }}
-                  className="text-5xl md:text-7xl font-bold text-white leading-tight"
-                >
-                  Discover
-                  <motion.span
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.8 }}
-                    className="block bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent"
-                  >
-                    Amazing Products
-                  </motion.span>
-                </motion.h1>
-                
-                <motion.p
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5 }}
-                  className="text-xl text-slate-300 max-w-lg leading-relaxed"
-                >
-                  Shop the latest trends and find everything you need in one place. 
-                  Quality products, great prices, and lightning-fast delivery.
-                </motion.p>
-              </div>
-
-              {/* CTA Buttons with Enhanced Animations */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.7 }}
-                className="flex flex-col sm:flex-row gap-4"
-              >
-                <Link to="/products">
-                  <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="relative"
-                  >
-                    <Button 
-                      size="lg" 
-                      className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold px-8 py-4 text-lg shadow-2xl"
-                    >
-                      <span className="flex items-center">
-                        Shop Now
-                        <ArrowRight className="ml-2 h-5 w-5" />
-                      </span>
-                    </Button>
-                    <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg blur-lg opacity-50 -z-10"></div>
-                  </motion.div>
-                </Link>
-                
-                <Link to="/products?featured=true">
-                  <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <Button 
-                      variant="outline" 
-                      size="lg" 
-                      className="w-full sm:w-auto border-2 border-white/30 text-white hover:bg-white/10 px-8 py-4 text-lg backdrop-blur-sm"
-                    >
-                      Featured Products
-                    </Button>
-                  </motion.div>
-                </Link>
-              </motion.div>
-
-              {/* Stats */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.9 }}
-                className="flex items-center space-x-8 pt-8"
-              >
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-white">10K+</div>
-                  <div className="text-sm text-slate-400">Happy Customers</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-white">500+</div>
-                  <div className="text-sm text-slate-400">Products</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-white">24/7</div>
-                  <div className="text-sm text-slate-400">Support</div>
-                </div>
-              </motion.div>
-            </motion.div>
-            
-            {/* Enhanced Product Image Section */}
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="relative"
-            >
-              {/* Main Product Image */}
-              <motion.div
-                whileHover={{ scale: 1.05, rotate: 2 }}
-                transition={{ duration: 0.3 }}
-                className="relative z-10"
-              >
-                <img
-                  src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=600&h=400&fit=crop"
-                  alt="Featured Products"
-                  className="rounded-2xl shadow-2xl border border-white/20"
-                />
-                
-                {/* Floating Product Cards */}
-                <motion.div
-                  initial={{ opacity: 0, scale: 0 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 1, duration: 0.5 }}
-                  className="absolute -top-6 -left-6 bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20"
-                >
-                  <div className="flex items-center space-x-3">
-                    <img
-                      src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=60&h=60&fit=crop"
-                      alt="Headphones"
-                      className="w-12 h-12 rounded-lg object-cover"
-                    />
-                    <div>
-                      <div className="text-white font-semibold text-sm">Wireless Headphones</div>
-                      <div className="text-green-400 text-xs">$99.99</div>
-                    </div>
-                  </div>
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0, scale: 0 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 1.2, duration: 0.5 }}
-                  className="absolute -bottom-6 -right-6 bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20"
-                >
-                  <div className="flex items-center space-x-3">
-                    <img
-                      src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=60&h=60&fit=crop"
-                      alt="Smart Watch"
-                      className="w-12 h-12 rounded-lg object-cover"
-                    />
-                    <div>
-                      <div className="text-white font-semibold text-sm">Smart Watch</div>
-                      <div className="text-green-400 text-xs">$199.99</div>
-                    </div>
-                  </div>
-                </motion.div>
-              </motion.div>
-
-              {/* Background Glow Effects */}
-              <div className="absolute -top-8 -right-8 w-32 h-32 bg-blue-500/30 rounded-full blur-2xl animate-pulse"></div>
-              <div className="absolute -bottom-8 -left-8 w-40 h-40 bg-purple-500/30 rounded-full blur-2xl animate-pulse delay-1000"></div>
-              
-              {/* Decorative Elements */}
-              <div className="absolute top-1/4 -left-4 w-8 h-8 bg-cyan-400/50 rounded-full animate-bounce"></div>
-              <div className="absolute bottom-1/4 -right-4 w-6 h-6 bg-purple-400/50 rounded-full animate-bounce delay-500"></div>
-            </motion.div>
-          </div>
-        </div>
-
-        {/* Scroll Indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5 }}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-        >
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center"
-          >
-            <motion.div
-              animate={{ y: [0, 12, 0] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="w-1 h-3 bg-white/50 rounded-full mt-2"
-            ></motion.div>
-          </motion.div>
-        </motion.div>
-      </section>
+    <div className="flex flex-col gap-8">
+      {/* Search Bar removed to prevent duplicate on landing page */}
+      {/* Hero Section */}
+      <HeroSection />
 
       {/* Features Section */}
       <section className="py-16 bg-background">
@@ -474,6 +268,9 @@ const Home = () => {
           <TestimonialsCarousel testimonials={testimonials} />
         </div>
       </section>
+
+      {/* Recently Viewed Products Section */}
+      <RecentlyViewed />
 
       {/* CTA Section */}
       <section className="py-16 bg-primary text-primary-foreground">

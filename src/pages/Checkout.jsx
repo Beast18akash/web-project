@@ -27,6 +27,7 @@ const Checkout = () => {
   const { toast } = useToast()
   const { items, total, itemCount } = useSelector(state => state.cart)
   const { user } = useSelector(state => state.auth)
+  const { isPremium } = useSelector(state => state.membership)
 
   const [formData, setFormData] = useState({
     // Personal Information
@@ -80,14 +81,28 @@ const Checkout = () => {
     }, 2000)
   }
 
-  const shipping = total > 50 ? 0 : 9.99
+  const baseShipping = total > 50 ? 0 : 9.99
+  const shipping = isPremium ? 0 : baseShipping
   const tax = total * 0.08 // 8% tax
-  const finalTotal = total + shipping + tax
+  const premiumDiscount = isPremium ? total * 0.05 : 0 // 5% Premium discount
+  const finalTotal = total + shipping + tax - premiumDiscount
 
   const shippingMethods = [
-    { value: 'standard', label: 'Standard Shipping (5-7 days)', price: shipping },
-    { value: 'express', label: 'Express Shipping (2-3 days)', price: shipping + 10 },
-    { value: 'overnight', label: 'Overnight Shipping (1 day)', price: shipping + 25 },
+    { 
+      value: 'standard', 
+      label: `Standard Shipping (5-7 days)${isPremium ? ' - FREE with Premium' : ''}`, 
+      price: isPremium ? 0 : baseShipping 
+    },
+    { 
+      value: 'express', 
+      label: `Express Shipping (2-3 days)${isPremium ? ' - FREE with Premium' : ''}`, 
+      price: isPremium ? 0 : baseShipping + 10 
+    },
+    { 
+      value: 'overnight', 
+      label: 'Overnight Shipping (1 day)', 
+      price: isPremium ? 15 : baseShipping + 25 
+    },
   ]
 
   if (orderComplete) {
@@ -387,10 +402,16 @@ const Checkout = () => {
                           <p className="text-xs text-muted-foreground">
                             Qty: {item.quantity}
                           </p>
+                          {item.discount && (
+                            <span className="text-xs text-red-500 font-semibold">-{item.discount}% OFF</span>
+                          )}
                         </div>
-                        <p className="text-sm font-medium">
-                          {formatCurrency(item.price * item.quantity)}
-                        </p>
+                        <div className="flex flex-col items-end">
+                          <span className="text-sm font-medium">{formatCurrency(item.price * item.quantity)}</span>
+                          {item.originalPrice && (
+                            <span className="text-xs text-muted-foreground line-through">{formatCurrency(item.originalPrice * item.quantity)}</span>
+                          )}
+                        </div>
                       </div>
                     ))}
                   </div>

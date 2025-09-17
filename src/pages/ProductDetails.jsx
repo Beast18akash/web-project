@@ -16,9 +16,10 @@ import {
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { addToCart } from '@/store/slices/cartSlice'
-import { getProductById } from '@/data/mockData'
+import { getProductById, mockProducts } from '@/data/mockData'
 import { useToast } from '@/hooks/use-toast'
 import { formatCurrency } from '@/lib/utils'
+import ReviewForm from '../components/ui/ReviewForm'
 
 const ProductDetails = () => {
   const { id } = useParams()
@@ -30,6 +31,13 @@ const ProductDetails = () => {
   const [quantity, setQuantity] = useState(1)
   const [selectedImage, setSelectedImage] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
+  // Review state
+  const [reviews, setReviews] = useState([])
+
+  // Add review handler
+  const handleAddReview = (review) => {
+    setReviews((prev) => [review, ...prev])
+  }
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -139,6 +147,18 @@ const ProductDetails = () => {
     product.image,
   ]
 
+  // Recommendation engine: get related products by category and rating
+  const relatedProducts = product
+    ? mockProducts
+        .filter(
+          (p) =>
+            p.id !== product.id &&
+            p.category === product.category &&
+            p.rating >= product.rating - 0.5
+        )
+        .slice(0, 4)
+    : [];
+
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8">
@@ -192,6 +212,7 @@ const ProductDetails = () => {
                     src={image}
                     alt={`${product.name} ${index + 1}`}
                     className="w-full h-full object-cover"
+                    loading="lazy"
                   />
                 </motion.button>
               ))}
@@ -328,12 +349,49 @@ const ProductDetails = () => {
         >
           <h2 className="text-2xl font-bold mb-8">You might also like</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {/* This would typically show related products */}
-            <div className="text-center py-8 text-muted-foreground">
-              Related products would be displayed here
-            </div>
+            {relatedProducts.length === 0 ? (
+              <div className="text-center py-8 text-muted-foreground">
+                No related products found.
+              </div>
+            ) : (
+              relatedProducts.map((related) => (
+                <div key={related.id}>
+                  <Card>
+                    <CardContent className="p-4">
+                      <img src={related.image} alt={related.name} className="w-full h-32 object-cover rounded mb-2" loading="lazy" />
+                      <h3 className="font-semibold text-lg mb-1">{related.name}</h3>
+                      <p className="text-sm text-muted-foreground mb-2">{related.category}</p>
+                      <span className="text-primary font-bold">{formatCurrency(related.price)}</span>
+                    </CardContent>
+                  </Card>
+                </div>
+              ))
+            )}
           </div>
         </motion.div>
+          {/* User Reviews Section */}
+          <div className="mt-16">
+            <h2 className="text-2xl font-bold mb-8">Customer Reviews</h2>
+            <ReviewForm onSubmit={handleAddReview} />
+            <div className="mt-8 space-y-6">
+              {reviews.length === 0 ? (
+                <div className="text-muted-foreground">No reviews yet. Be the first to review!</div>
+              ) : (
+                reviews.map((review, idx) => (
+                  <div key={idx} className="border rounded-lg p-6 bg-card shadow-sm">
+                    <div className="flex items-center mb-2">
+                      <span className="font-semibold mr-2">{review.name || 'Anonymous'}</span>
+                      <span className="text-xs text-muted-foreground">{new Date(review.date).toLocaleDateString()}</span>
+                    </div>
+                    <p className="mb-4">{review.text}</p>
+                    {review.image && (
+                      <img src={review.image} alt="Review" className="max-w-xs rounded-lg border" />
+                    )}
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
       </div>
     </div>
   )

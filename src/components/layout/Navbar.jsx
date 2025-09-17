@@ -9,8 +9,10 @@ import {
   Menu, 
   X,
   LogOut,
-  Heart
+  Heart,
+  ChevronDown
 } from 'lucide-react'
+import MobileMenu from './MobileMenu'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import DarkModeToggle from '@/components/ui/DarkModeToggle'
@@ -75,11 +77,28 @@ const Navbar = () => {
             </form>
           </div>
 
+          {/* Mobile Menu Button */}
+          <button 
+            onClick={() => setIsMenuOpen(true)} 
+            className="lg:hidden ml-auto"
+          >
+            <Menu className="h-6 w-6" />
+          </button>
+
+          {/* Mobile Menu */}
+          <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
+
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-4">
             <Link to="/products">
               <Button variant="ghost" className="text-sm">
                 Products
+              </Button>
+            </Link>
+
+            <Link to="/premium">
+              <Button variant="ghost" className="text-sm font-semibold text-primary">
+                Premium
               </Button>
             </Link>
             

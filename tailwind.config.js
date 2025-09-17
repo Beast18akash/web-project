@@ -17,6 +17,10 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ["Inter", "ui-sans-serif", "system-ui"],
+        heading: ["Poppins", "ui-sans-serif", "system-ui"],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -42,6 +46,11 @@ module.exports = {
         accent: {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
+          blue: '#38bdf8',
+          pink: '#ec4899',
+          yellow: '#fde68a',
+          green: '#34d399',
+          orange: '#fb923c',
         },
         popover: {
           DEFAULT: "hsl(var(--popover))",

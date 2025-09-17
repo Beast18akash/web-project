@@ -10,13 +10,18 @@ import Cart from '@/pages/Cart'
 import Checkout from '@/pages/Checkout'
 import Login from '@/pages/Login'
 import Signup from '@/pages/Signup'
+import Premium from '@/pages/Premium'
 import ProtectedRoute from '@/components/auth/ProtectedRoute'
+
+import DarkModeToggle from '@/components/ui/DarkModeToggle'
+import MobileNav from '@/components/layout/MobileNav'
 
 function App() {
   return (
     <div className="min-h-screen bg-background">
+      <DarkModeToggle />
       <Navbar />
-      <main className="min-h-[calc(100vh-200px)]">
+      <main className="min-h-[calc(100vh-200px)] pb-16 lg:pb-0">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
@@ -32,10 +37,12 @@ function App() {
           />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/premium" element={<Premium />} />
         </Routes>
       </main>
       <Footer />
-      <FloatingCart />
+      <FloatingCart className="hidden lg:flex" />
+      <MobileNav />
       <Toaster />
     </div>
   )
