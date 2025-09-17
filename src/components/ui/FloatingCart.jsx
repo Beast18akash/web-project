@@ -209,3 +209,4 @@ const FloatingCart = () => {
 }
 
 export default FloatingCart
+

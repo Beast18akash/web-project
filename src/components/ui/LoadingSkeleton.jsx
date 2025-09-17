@@ -158,3 +158,4 @@ const LoadingSkeleton = ({ type = 'product' }) => {
 }
 
 export default LoadingSkeleton
+

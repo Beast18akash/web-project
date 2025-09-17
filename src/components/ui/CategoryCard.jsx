@@ -115,3 +115,4 @@ const CategoryCard = ({ category, index }) => {
 }
 
 export default CategoryCard
+

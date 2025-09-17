@@ -309,3 +309,4 @@ const AdvancedFilters = ({ onFiltersChange, categories = [] }) => {
 }
 
 export default AdvancedFilters
+
