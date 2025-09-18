@@ -1,212 +1,163 @@
 # React E-commerce Store
 
-A modern, responsive e-commerce website built with React, featuring a clean UI with Tailwind CSS and shadcn/ui components.
+A modern, responsive e-commerce web app built with React, Vite, Tailwind CSS, Redux Toolkit, and shadcn/ui + Radix primitives.
 
-## 🚀 Features
+## Features
 
-- **Home Page** - Featured products, categories, and hero banner
-- **Product Listing** - Grid view with filtering and sorting options
-- **Product Details** - Detailed product information with image gallery
-- **Shopping Cart** - Add/remove items, quantity management
-- **Checkout Process** - Complete checkout flow with form validation
-- **Authentication** - Login and signup functionality
-- **Search** - Search products by name or category
-- **Responsive Design** - Mobile-friendly with smooth navigation
-- **State Management** - Redux Toolkit for cart and auth management
-- **Animations** - Framer Motion for smooth transitions
-- **Modern UI** - Clean design with rounded corners and soft shadows
+- Home page with hero, featured products, categories, testimonials
+- Product catalog with advanced filters (category, brand, rating, price range) and sorting
+- Product details with gallery, add-to-cart, related items, and review form
+- Shopping cart with quantity updates, totals, and persistence-ready structure
+- Checkout flow with forms and validation UI
+- Authentication (mock) with protected routes and demo credentials
+- Wishlist drawer (add/remove/toggle, drawer open state)
+- Premium membership program (benefits, activation/deactivation, renewal dates, savings tracking)
+- Recently viewed products (custom hook + component)
+- Search with instant filtering
+- Pull-to-refresh interaction on supported devices
+- Responsive design with mobile navigation and smooth animations
+- Dark mode toggle and accessible UI components
 
-## 🛠️ Tech Stack
+## Tech Stack
 
-- **React 18** - Frontend framework
-- **Vite** - Build tool and dev server
-- **Redux Toolkit** - State management
-- **React Router** - Client-side routing
-- **Tailwind CSS** - Utility-first CSS framework
-- **shadcn/ui** - Reusable UI components
-- **Framer Motion** - Animation library
-- **Lucide React** - Icon library
+- React 18, Vite 5
+- React Router 6
+- Redux Toolkit, React Redux
+- Tailwind CSS, tailwindcss-animate, tailwind-merge
+- shadcn/ui built on Radix UI primitives
+- Framer Motion (animations)
+- Lucide React (icons)
 
-## 📦 Installation
+## Quickstart
 
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd react-ecommerce
-   ```
+Prerequisites: Node.js 18+
 
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
+1) Install dependencies
 
-3. **Start the development server**
-   ```bash
-   npm run dev
-   ```
+```bash
+npm install
+```
 
-4. **Open your browser**
-   Navigate to `http://localhost:5173`
+2) Start the dev server
 
-## 🎯 Demo Credentials
+```bash
+npm run dev
+```
 
-For testing the authentication system:
+3) Open your browser at:
+- http://localhost:5173
 
-- **Email:** `demo@example.com`
-- **Password:** `password`
+### Demo credentials
+- Email: demo@example.com
+- Password: password
 
-## 📱 Pages & Features
+## Scripts
 
-### Home Page (`/`)
-- Hero section with call-to-action
-- Featured products showcase
-- Category navigation
-- Customer testimonials
-- Feature highlights
+- npm run dev – Start development server
+- npm run build – Build for production
+- npm run preview – Preview the production build
+- npm run lint – Run ESLint on JS/JSX files
 
-### Products Page (`/products`)
-- Product grid with filtering options
-- Category and price range filters
-- Search functionality
-- Sorting options (name, price, rating)
-- Grid/list view toggle
+## Routes & Pages
 
-### Product Details (`/products/:id`)
-- Product image gallery
-- Detailed product information
-- Quantity selector
-- Add to cart functionality
-- Related products section
+- / – Home
+- /products – Product listing (filters, search, sorting)
+- /products/:id – Product details
+- /cart – Shopping cart
+- /checkout – Checkout
+- /login – Login (mock auth)
+- /signup – Signup (mock auth)
+- /premium – Premium membership landing/management
 
-### Shopping Cart (`/cart`)
-- Cart items management
-- Quantity adjustment
-- Remove items
-- Order summary
-- Proceed to checkout
+ProtectedRoute is used to guard pages that require auth.
 
-### Checkout (`/checkout`)
-- Personal information form
-- Shipping address
-- Payment information
-- Shipping method selection
-- Order confirmation
+## State Management (Redux Toolkit)
 
-### Authentication
-- **Login** (`/login`) - User authentication
-- **Signup** (`/signup`) - New user registration
+Slices (src/store/slices):
 
-## 🎨 Design Features
+- authSlice
+  - State: user, isAuthenticated, loading, error
+  - Actions: loginStart, loginSuccess, loginFailure, logout, clearError
 
-- **Modern UI** - Clean, minimal design with rounded corners
-- **Responsive** - Mobile-first approach with breakpoints
-- **Animations** - Smooth transitions and hover effects
-- **Accessibility** - Proper ARIA labels and keyboard navigation
-- **Dark Mode Ready** - CSS variables for easy theme switching
+- cartSlice
+  - State: items[], itemCount, total
+  - Actions: addToCart, removeFromCart, updateQuantity, clearCart
 
-## 🗂️ Project Structure
+- productsSlice
+  - State: products[], categories[], loading, error, filters { priceRange, brands, categories, ratings, search, sortBy }
+  - Actions: setProducts, setCategories, setLoading, setError, setFilters, clearFilters
+
+- wishlistSlice
+  - State: items[], isOpen (drawer)
+  - Actions: addToWishlist, removeFromWishlist, toggleWishlist, clearWishlist, toggleWishlistDrawer, setWishlistDrawer
+
+- membershipSlice
+  - State: isPremium, benefits[], memberSince, nextRenewal, savingsThisYear
+  - Actions: activatePremium, deactivatePremium, updateSavings
+
+Store configuration: src/store/store.js combines the above reducers.
+
+## Notable Components
+
+- Layout: Navbar, MobileNav, MobileMenu, Footer, FloatingCart
+- UI: ProductCard, CategoryCard, SearchBar, LoadingSkeleton, price-range-slider, filter-panel, filter-checkbox, AdvancedFilters, ReviewForm, TestimonialsCarousel, DarkModeToggle, WishlistDrawer, toast/toaster, pull-to-refresh
+- Auth: ProtectedRoute
+- Sections: HeroSection, RecentlyViewed
+
+## Project Structure
 
 ```
 src/
-├── components/
-│   ├── ui/                 # Reusable UI components
-│   ├── layout/             # Layout components (Navbar, Footer)
-│   └── auth/               # Authentication components
-├── pages/                  # Page components
-├── store/                  # Redux store and slices
-├── data/                   # Mock data and utilities
-├── hooks/                  # Custom React hooks
-├── lib/                    # Utility functions
-└── main.jsx               # Application entry point
+  components/
+    auth/                # Auth helpers (e.g., ProtectedRoute)
+    layout/              # Navbar, Footer, mobile nav/menu
+    ui/                  # Reusable UI widgets and sections
+  data/                  # Mock data
+  hooks/                 # Custom hooks (use-toast, use-recently-viewed)
+  lib/                   # Utilities (e.g., classNames)
+  pages/                 # Page components (Home, Products, Details, Cart, etc.)
+  store/                 # Redux store and slices
+  App.jsx                # App shell and routing
+  main.jsx               # Entry point
 ```
 
-## 🔧 Available Scripts
+## Styling & UI
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build
-- `npm run lint` - Run ESLint
+- Tailwind CSS utility-first styling
+- shadcn/ui components using Radix primitives
+- Accessible patterns (focus states, ARIA-friendly components)
+- Dark mode toggle support
+- Motion/transition effects with Framer Motion
 
-## 🚀 Deployment
+## Development Notes
 
-1. **Build the project**
-   ```bash
-   npm run build
-   ```
+- This project currently uses mock data and mock auth. Replace mocks with API calls as needed.
+- Components are split into small, reusable pieces to encourage composition.
+- Filters and search are controlled via Redux for predictable data flow.
 
-2. **Deploy the `dist` folder** to your preferred hosting service:
-   - Vercel
-   - Netlify
-   - GitHub Pages
-   - AWS S3
+## Potential Enhancements
 
-## 🎯 Key Components
-
-### ProductCard
-- Displays product information
-- Add to cart functionality
-- Rating display
-- Responsive design
-
-### Navbar
-- Search functionality
-- Cart counter
-- User authentication status
-- Mobile-responsive menu
-
-### Cart Management
-- Add/remove items
-- Quantity updates
-- Total calculation
-- Persistent state
-
-## 🔐 Authentication
-
-The app includes a mock authentication system:
-- Login with demo credentials
-- Signup with form validation
-- Protected routes
-- User session management
-
-## 📊 State Management
-
-Redux Toolkit slices:
-- **Cart Slice** - Shopping cart state
-- **Auth Slice** - User authentication
-- **Products Slice** - Product data and filters
-
-## 🎨 Styling
-
-- **Tailwind CSS** for utility-first styling
-- **shadcn/ui** components for consistent design
-- **CSS Variables** for theming
-- **Responsive breakpoints** for mobile-first design
-
-## 🔄 Future Enhancements
-
-- Real API integration
+- Real API integration for products, auth, and checkout
 - Payment gateway integration
-- User profiles and order history
-- Product reviews and ratings
-- Wishlist functionality
+- User profiles, order history, and persisted sessions
+- Server-driven search and filtering
+- Review moderation and ratings aggregation
 - Admin dashboard
-- Email notifications
-- Advanced search filters
 
-## 📄 License
+## License
 
-This project is open source and available under the [MIT License](LICENSE).
+MIT
 
-## 🤝 Contributing
+## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+- Fork and create a feature branch
+- Run linting before committing: npm run lint
+- Open a PR with a clear description of changes
 
-## 📞 Support
+## Support
 
-If you have any questions or need help, please open an issue in the repository.
+Open an issue in the repository if you encounter a bug or have a feature request.
 
----
+—
 
-Built with ❤️ using React and modern web technologies.
-
-
+Built with React, Vite, Tailwind, Redux Toolkit, and shadcn/ui.
